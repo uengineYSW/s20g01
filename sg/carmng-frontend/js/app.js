@@ -28,7 +28,7 @@ function registerDriver() {
 }
 
 function updateDriver() {
-    const driverId = $('#updateDriverId').val();
+    const driverId = $('#updateDriverEmpNo').val();
     const formData = {};
     $('#updateDriverForm').serializeArray().forEach(item => {
         if (item.name !== 'driverId') {
