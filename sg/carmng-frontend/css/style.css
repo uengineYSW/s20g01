@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1600px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.result-panel {
+    width: 400px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    position: sticky;
+    top: 20px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    margin-left: 20px;
+}
+
+.result-panel pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.tab-content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}

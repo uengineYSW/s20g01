@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>차량/운전자 관리 시스템</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tab-buttons {
+            margin-bottom: 20px;
+        }
+        .tab-buttons button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            padding: 5px;
+            width: 250px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .list-button {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="tab-buttons">
+                <button onclick="showTab('driver')">운전자 관리</button>
+                <button onclick="showTab('vehicle')">차량 관리</button>
+            </div>
+
+            <!-- 운전자 관리 탭 -->
+            <div id="driverTab" class="tab-content">
+                <h2>운전자 관리</h2>
+                
+                <!-- 운전자 생성 섹션 -->
+                <div class="section">
+                    <h3>운전자 등록</h3>
+                    <form id="createDriverForm">
+                        <div class="form-group">
+                            <label for="driverEmpNo">사원번호:</label>
+                            <input type="text" id="driverEmpNo" name="driverEmpNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">이름:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyCode">회사코드:</label>
+                            <input type="text" id="companyCode" name="companyCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="worksCode">사업장코드:</label>
+                            <input type="text" id="worksCode" name="worksCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="handPhone">전화번호:</label>
+                            <input type="tel" id="handPhone" name="handPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseNumber">면허번호:</label>
+                            <input type="text" id="licenseNumber" name="licenseNumber" required>
+                        </div>
+                        <button type="button" onclick="registerDriver()">등록</button>
+                    </form>
+                </div>
+
+                <!-- 운전자 수정 섹션 -->
+                <div class="section">
+                    <h3>운전자 수정</h3>
+                    <form id="updateDriverForm">
+                        <div class="form-group">
+                            <label for="updateDriverEmpNo">사원번호:</label>
+                            <input type="text" id="updateDriverEmpNo" name="driverEmpNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateName">이름:</label>
+                            <input type="text" id="updateName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateCompanyCode">회사코드:</label>
+                            <input type="text" id="updateCompanyCode" name="companyCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateWorksCode">사업장코드:</label>
+                            <input type="text" id="updateWorksCode" name="worksCode" required>
+                        </div>
+                        <button type="button" onclick="updateDriver()">수정</button>
+                    </form>
+                </div>
+
+                <!-- 운전자 삭제 섹션 -->
+                <div class="section">
+                    <h3>운전자 삭제</h3>
+                    <form id="deleteDriverForm">
+                        <div class="form-group">
+                            <label for="deleteDriverEmpNo">사원번호:</label>
+                            <input type="text" id="deleteDriverEmpNo" name="driverEmpNo" required>
+                        </div>
+                        <button type="button" onclick="deleteDriver()">삭제</button>
+                    </form>
+                </div>
+
+                <!-- 운전자 조회 버튼 -->
+                <div class="list-button">
+                    <button type="button" onclick="loadDrivers()">운전자 전체 조회</button>
+                </div>
+            </div>
+
+            <!-- 차량 관리 탭 -->
+            <div id="vehicleTab" class="tab-content">
+                <h2>차량 관리</h2>
+                
+                <!-- 차량 생성 섹션 -->
+                <div class="section">
+                    <h3>차량 등록</h3>
+                    <form id="createVehicleForm">
+                        <div class="form-group">
+                            <label for="carrierNo">차량번호:</label>
+                            <input type="text" id="carrierNo" name="carrierNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carType">차종:</label>
+                            <input type="text" id="carType" name="carType" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carModel">모델명:</label>
+                            <input type="text" id="carModel" name="carModel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyCode">회사코드:</label>
+                            <input type="text" id="companyCode" name="companyCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="worksCode">사업장코드:</label>
+                            <input type="text" id="worksCode" name="worksCode" required>
+                        </div>
+                        <button type="button" onclick="registerVehicle()">등록</button>
+                    </form>
+                </div>
+
+                <!-- 차량 수정 섹션 -->
+                <div class="section">
+                    <h3>차량 수정</h3>
+                    <form id="updateVehicleForm">
+                        <div class="form-group">
+                            <label for="updateCarrierNo">차량번호:</label>
+                            <input type="text" id="updateCarrierNo" name="carrierNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateCarType">차종:</label>
+                            <input type="text" id="updateCarType" name="carType" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateCarModel">모델명:</label>
+                            <input type="text" id="updateCarModel" name="carModel" required>
+                        </div>
+                        <button type="button" onclick="updateVehicle()">수정</button>
+                    </form>
+                </div>
+
+                <!-- 차량 삭제 섹션 -->
+                <div class="section">
+                    <h3>차량 삭제</h3>
+                    <form id="deleteVehicleForm">
+                        <div class="form-group">
+                            <label for="deleteCarrierNo">차량번호:</label>
+                            <input type="text" id="deleteCarrierNo" name="carrierNo" required>
+                        </div>
+                        <button type="button" onclick="deleteVehicle()">삭제</button>
+                    </form>
+                </div>
+
+                <!-- 차량 조회 버튼 -->
+                <div class="list-button">
+                    <button type="button" onclick="loadVehicles()">차량 전체 조회</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-panel">
+            <h3>실행 결과</h3>
+            <pre id="resultArea"></pre>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        function showTab(tabName) {
+            $('.tab-content').removeClass('active');
+            $(`#${tabName}Tab`).addClass('active');
+        }
+
+        $(document).ready(function() {
+            showTab('driver');
+        });
+    </script>
+</body>
+</html>
